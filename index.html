@@ -151,57 +151,54 @@ document.querySelectorAll('.tab').forEach(tab=>{
   });
 });
 
-
 const mediaFiles = [
-  {name:"File1.mkv", size:"81.7 MB", img:"https://picsum.photos/200?1"},
-  {name:"ReZero15.mkv", size:"123 MB", img:"https://picsum.photos/200?2"},
-  {name:"ReZero14.mkv", size:"135 MB", img:"https://picsum.photos/200?3"},
-  {name:"File4.mkv", size:"90 MB", img:"https://picsum.photos/200?4"},
-  {name:"File5.mkv", size:"110 MB", img:"https://picsum.photos/200?5"}
+  {name:"File1.mkv", size:"81.7 MB", file:"media/File1.mkv", img:"https://picsum.photos/200?1"},
+  {name:"ReZero15.mkv", size:"123 MB", file:"media/ReZero15.mkv", img:"https://picsum.photos/200?2"},
+  {name:"ReZero14.mkv", size:"135 MB", file:"media/ReZero14.mkv", img:"https://picsum.photos/200?3"},
+  {name:"File4.mkv", size:"90 MB", file:"media/File4.mkv", img:"https://picsum.photos/200?4"},
+  {name:"File5.mkv", size:"110 MB", file:"media/File5.mkv", img:"https://picsum.photos/200?5"}
 ];
 
 const mediaGrid = document.querySelector('#media .grid');
-const filesList = document.querySelector('#media .files-list');
-
 mediaGrid.innerHTML = '';
-filesList.innerHTML = '';
 
 mediaFiles.forEach(f=>{
   const thumb = document.createElement('div');
   thumb.className = 'thumb';
   thumb.innerHTML = `
-    <img src="${f.img}" alt="">
+    <a href="${f.file}" download>
+      <img src="${f.img}" alt="">
+    </a>
     <div class="name">${f.name}</div>
     <div class="meta">${f.size}</div>
   `;
   mediaGrid.appendChild(thumb);
+});
+
 const musicFiles = [
-    {name: "نمیفهمه کسی", file: "media/Nemifahme.mp3"},
-    {name: "یه شب", file: "media/YeShab.mp3"},
-    {name: "نه از ده", file: "media/910.mp3"},
-    {name: "زمستون", file: "media/Zemestoon.mp3"},
-    {name: "پشیمونم", file: "media/Pashimoonam.mp3"},
-    {name: "تولد", file: "media/Tavalod.mp3"},
-    {name: "خدایا", file: "media/Khodaya.mp3"},
-  ];
+  {name: "نمیفهمه کسی", file: "media/Nemifahme.mp3"},
+  {name: "یه شب", file: "media/YeShab.mp3"},
+  {name: "نه از ده", file: "media/910.mp3"},
+  {name: "زمستون", file: "media/Zemestoon.mp3"},
+  {name: "پشیمونم", file: "media/Pashimoonam.mp3"},
+  {name: "تولد", file: "media/Tavalod.mp3"},
+  {name: "خدایا", file: "media/Khodaya.mp3"}
+];
 
-  const musicListDiv = document.getElementById("music-list");
+const musicListDiv = document.getElementById("music-list");
+musicFiles.forEach(music => {
+  const musicRow = document.createElement("div");
+  musicRow.className = "music-row";
+  musicRow.style.marginBottom = "10px";
 
-  musicFiles.forEach(music => {
-    const musicRow = document.createElement("div");
-    musicRow.className = "music-row";
-    musicRow.style.marginBottom = "10px";
-
-    musicRow.innerHTML = `
-      <div>${music.name}</div>
-      <audio controls style="width:100%">
-        <source src="${music.file}" type="audio/mpeg">
-        مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
-      </audio>
-    `;
-
-    musicListDiv.appendChild(musicRow);
-  });
+  musicRow.innerHTML = `
+    <div>${music.name}</div>
+    <audio controls style="width:100%">
+      <source src="${music.file}" type="audio/mpeg">
+      مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
+    </audio>
+  `;
+  musicListDiv.appendChild(musicRow);
 });
 </script>
 </body>

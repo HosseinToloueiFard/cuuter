@@ -175,16 +175,6 @@ mediaFiles.forEach(f=>{
   `;
   mediaGrid.appendChild(thumb);
 
-  const fileRow = document.createElement('div');
-  fileRow.className = 'file-row';
-  fileRow.innerHTML = `
-    <div class="file-icon">${f.name.split('.').pop()}</div>
-    <div class="file-meta">
-      <div class="title">${f.name}</div>
-      <div class="subtitle">${f.size}</div>
-    </div>
-  `;
-  filesList.appendChild(fileRow);
 });
 </script>
 </body>

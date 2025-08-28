@@ -1,11 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fa" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My First Page</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Telegram Profile Clone</title>
+  <style>
+    body{
+      margin:0;
+      font-family:sans-serif;
+      background:#111;
+      color:#fff;
+    }
+    .container{
+      max-width:600px;
+      margin:0 auto;
+      background:#1e1e1e;
+      min-height:100vh;
+    }
+    .profile-header{
+      display:flex;
+      align-items:center;
+      padding:15px;
+      gap:15px;
+      border-bottom:1px solid #333;
+    }
+    .avatar{
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      overflow:hidden;
+      flex-shrink:0;
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    .profile-info{flex:1}
+    .profile-info .name{font-size:18px;font-weight:bold}
+    .profile-info .lastseen{color:#aaa;font-size:14px}
+    .actions{
+      display:flex;
+      gap:10px;
+    }
+    .actions button{
+      background:#333;
+      border:none;
+      border-radius:50%;
+      width:40px;height:40px;
+      color:#fff;
+      cursor:pointer;
+    }
+    .info{padding:15px;border-bottom:1px solid #333}
+    .info-item{margin-bottom:10px}
+    .label{color:#aaa;font-size:13px}
+    .value{font-weight:bold}
+    .tabs{display:flex;border-bottom:1px solid #333}
+    .tab{
+      flex:1;
+      text-align:center;
+      padding:10px;
+      cursor:pointer;
+      color:#aaa;
+    }
+    .tab.active{color:#4da3ff;border-bottom:2px solid #4da3ff}
+    .content{padding:15px}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(100px,1fr));
+      gap:10px;
+    }
+    .thumb{
+      background:#222;
+      border-radius:8px;
+      padding:5px;
+      text-align:center;
+    }
+    .thumb img{
+      width:100%;height:80px;object-fit:cover;border-radius:6px
+    }
+    .thumb .name{font-size:12px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .thumb .meta{font-size:11px;color:#aaa}
+    .file-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #333}
+    .file-icon{
+      background:#3ca96c;
+      color:#fff;
+      width:40px;height:40px;
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:bold;
+    }
+    .file-meta .title{font-weight:bold}
+    .file-meta .subtitle{font-size:12px;color:#aaa}
+  </style>
 </head>
 <body>
-  <h1>Hello, World!</h1>
+  <div class="container">
+    <div class="profile-header">
+      <div class="avatar"><img src="images/prof.jpg" alt=""></div>
+      <div class="profile-info">
+        <div class="name" >Cuuter</div>
+        <div class="lastseen">last seen Aug 15 at 7:30</div>
+      </div>
+      <div class="actions">
+        <button>📹</button>
+        <button>📞</button>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-item">
+        <div class="label">Mobile</div>
+        <div class="value">+98 921 842 0693</div>
+      </div>
+      <div class="info-item">
+        <div class="label">Bio</div>
+        <div class="value"></div>
+      </div>
+      <div class="info-item">
+        <div class="label">Username</div>
+        <div class="value">@cuuter1</div>
+      </div>
+      <div class="info-item">
+        <div class="label">Date of Birth</div>
+        <div class="value">Aug 07</div>
+      </div>
+    </div>
+    <div class="tabs">
+      <div class="tab active" data-target="media">Media</div>
+      <div class="tab" data-target="music">Music</div>
+      <div class="tab" data-target="links">Links</div>
+    </div>
+    <div class="content">
+      <div id="media" class="pane">
+        <div class="grid"></div>
+        <div class="files-list"></div>
+      </div>
+      <div id="music" class="pane" style="display:none">
+        <p>Music files here...</p>
+      </div>
+      <div id="links" class="pane" style="display:none">
+        <p>Links here...</p>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.pane').forEach(p=>p.style.display='none');
+    document.getElementById(tab.dataset.target).style.display='block';
+  });
+});
+
+
+const mediaFiles = [
+  {name:"File1.mkv", size:"81.7 MB", img:"https://picsum.photos/200?1"},
+  {name:"ReZero15.mkv", size:"123 MB", img:"https://picsum.photos/200?2"},
+  {name:"ReZero14.mkv", size:"135 MB", img:"https://picsum.photos/200?3"},
+  {name:"File4.mkv", size:"90 MB", img:"https://picsum.photos/200?4"},
+  {name:"File5.mkv", size:"110 MB", img:"https://picsum.photos/200?5"}
+];
+
+const mediaGrid = document.querySelector('#media .grid');
+const filesList = document.querySelector('#media .files-list');
+
+mediaGrid.innerHTML = '';
+filesList.innerHTML = '';
+
+mediaFiles.forEach(f=>{
+  const thumb = document.createElement('div');
+  thumb.className = 'thumb';
+  thumb.innerHTML = `
+    <img src="${f.img}" alt="">
+    <div class="name">${f.name}</div>
+    <div class="meta">${f.size}</div>
+  `;
+  mediaGrid.appendChild(thumb);
+
+  const fileRow = document.createElement('div');
+  fileRow.className = 'file-row';
+  fileRow.innerHTML = `
+    <div class="file-icon">${f.name.split('.').pop()}</div>
+    <div class="file-meta">
+      <div class="title">${f.name}</div>
+      <div class="subtitle">${f.size}</div>
+    </div>
+  `;
+  filesList.appendChild(fileRow);
+});
+</script>
 </body>
 </html>

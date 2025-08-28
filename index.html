@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="ltr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -63,7 +63,7 @@
     .content{padding:15px}
     .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(120px,1fr));
+      grid-template-columns:repeat(auto-fill, minmax(100px,1fr));
       gap:10px;
     }
     .thumb{
@@ -72,30 +72,22 @@
       padding:5px;
       text-align:center;
     }
-    .thumb img, .thumb video{
-      width:100%;height:100px;object-fit:cover;border-radius:6px
+    .thumb img{
+      width:100%;height:80px;object-fit:cover;border-radius:6px
     }
     .thumb .name{font-size:12px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .thumb .meta{font-size:11px;color:#aaa}
-    .music-row{
-      margin-bottom:15px;
-      padding:10px;
-      background:#222;
+    .file-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #333}
+    .file-icon{
+      background:#3ca96c;
+      color:#fff;
+      width:40px;height:40px;
       border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:bold;
     }
-    .music-row .title{
-      margin-bottom:8px;
-      font-weight:bold;
-    }
-    .music-row audio{
-      width:100%;
-      margin-bottom:8px;
-    }
-    .music-row a{
-      color:#4da3ff;
-      text-decoration:none;
-      font-size:14px;
-    }
+    .file-meta .title{font-weight:bold}
+    .file-meta .subtitle{font-size:12px;color:#aaa}
   </style>
 </head>
 <body>
@@ -137,9 +129,11 @@
     <div class="content">
       <div id="media" class="pane">
         <div class="grid"></div>
+        <div class="files-list"></div>
       </div>
       <div id="music" class="pane" style="display:none">
           <div id="music-list"></div>
+      </div>
       </div>
       <div id="links" class="pane" style="display:none">
         <a href="https://m.soundcloud.com/user-165893208/">SoundCloud</a>
@@ -157,64 +151,57 @@ document.querySelectorAll('.tab').forEach(tab=>{
   });
 });
 
+
 const mediaFiles = [
-  {name:"File1.mkv", size:"81.7 MB", path:"media/File1.mkv"},
-  {name:"ReZero15.mkv", size:"123 MB", path:"media/ReZero15.mkv"},
-  {name:"ReZero14.mkv", size:"135 MB", path:"media/ReZero14.mkv"},
-  {name:"Image1.jpg", size:"1.2 MB", path:"media/Image1.jpg"},
-  {name:"Image2.png", size:"980 KB", path:"media/Image2.png"}
+  {name:"File1.mkv", size:"81.7 MB", img:"https://picsum.photos/200?1"},
+  {name:"ReZero15.mkv", size:"123 MB", img:"https://picsum.photos/200?2"},
+  {name:"ReZero14.mkv", size:"135 MB", img:"https://picsum.photos/200?3"},
+  {name:"File4.mkv", size:"90 MB", img:"https://picsum.photos/200?4"},
+  {name:"File5.mkv", size:"110 MB", img:"https://picsum.photos/200?5"}
 ];
 
 const mediaGrid = document.querySelector('#media .grid');
+const filesList = document.querySelector('#media .files-list');
+
 mediaGrid.innerHTML = '';
+filesList.innerHTML = '';
 
 mediaFiles.forEach(f=>{
   const thumb = document.createElement('div');
   thumb.className = 'thumb';
-
-  if(f.path.endsWith(".jpg") || f.path.endsWith(".png")){
-    thumb.innerHTML = `
-      <img src="${f.path}" alt="">
-      <div class="name">${f.name}</div>
-      <div class="meta">${f.size}</div>
-      <a href="${f.path}" download>دانلود</a>
-    `;
-  } else if(f.path.endsWith(".mkv") || f.path.endsWith(".mp4")){
-    thumb.innerHTML = `
-      <video src="${f.path}" controls></video>
-      <div class="name">${f.name}</div>
-      <div class="meta">${f.size}</div>
-      <a href="${f.path}" download>دانلود</a>
-    `;
-  }
-
-  mediaGrid.appendChild(thumb);
-});
-const musicFiles = [
-  {name: "نمیفهمه کسی", file: "media/Nemifahme.mp3"},
-  {name: "یه شب", file: "media/YeShab.mp3"},
-  {name: "نه از ده", file: "media/910.mp3"},
-  {name: "زمستون", file: "media/Zemestoon.mp3"},
-  {name: "پشیمونم", file: "media/Pashimoonam.mp3"},
-  {name: "تولد", file: "media/Tavalod.mp3"},
-  {name: "خدایا", file: "media/Khodaya.mp3"},
-];
-
-const musicListDiv = document.getElementById("music-list");
-musicFiles.forEach(music => {
-  const musicRow = document.createElement("div");
-  musicRow.className = "music-row";
-
-  musicRow.innerHTML = `
-    <div class="title">${music.name}</div>
-    <audio controls>
-      <source src="${music.file}" type="audio/mpeg">
-      مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
-    </audio>
-    <a href="${music.file}" download>⬇ دانلود</a>
+  thumb.innerHTML = `
+    <img src="${f.img}" alt="">
+    <div class="name">${f.name}</div>
+    <div class="meta">${f.size}</div>
   `;
+  mediaGrid.appendChild(thumb);
+const musicFiles = [
+    {name: "نمیفهمه کسی", file: "media/Nemifahme.mp3"},
+    {name: "یه شب", file: "media/YeShab.mp3"},
+    {name: "نه از ده", file: "media/910.mp3"},
+    {name: "زمستون", file: "media/Zemestoon.mp3"},
+    {name: "پشیمونم", file: "media/Pashimoonam.mp3"},
+    {name: "تولد", file: "media/Tavalod.mp3"},
+    {name: "خدایا", file: "media/Khodaya.mp3"},
+  ];
 
-  musicListDiv.appendChild(musicRow);
+  const musicListDiv = document.getElementById("music-list");
+
+  musicFiles.forEach(music => {
+    const musicRow = document.createElement("div");
+    musicRow.className = "music-row";
+    musicRow.style.marginBottom = "10px";
+
+    musicRow.innerHTML = `
+      <div>${music.name}</div>
+      <audio controls style="width:100%">
+        <source src="${music.file}" type="audio/mpeg">
+        مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
+      </audio>
+    `;
+
+    musicListDiv.appendChild(musicRow);
+  });
 });
 </script>
 </body>

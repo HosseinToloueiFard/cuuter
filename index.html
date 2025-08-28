@@ -132,7 +132,8 @@
         <div class="files-list"></div>
       </div>
       <div id="music" class="pane" style="display:none">
-        <p>Music files here...</p>
+          <div id="music-list"></div>
+      </div>
       </div>
       <div id="links" class="pane" style="display:none">
         <a href="https://m.soundcloud.com/user-165893208/">SoundCloud</a>
@@ -174,7 +175,28 @@ mediaFiles.forEach(f=>{
     <div class="meta">${f.size}</div>
   `;
   mediaGrid.appendChild(thumb);
+const musicFiles = [
+    {name: "Song 1", file: "media/song1.mp3"},
+    {name: "Song 2", file: "media/song2.mp3"}
+  ];
 
+  const musicListDiv = document.getElementById("music-list");
+
+  musicFiles.forEach(music => {
+    const musicRow = document.createElement("div");
+    musicRow.className = "music-row";
+    musicRow.style.marginBottom = "10px";
+
+    musicRow.innerHTML = `
+      <div>${music.name}</div>
+      <audio controls style="width:100%">
+        <source src="${music.file}" type="audio/mpeg">
+        مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
+      </audio>
+    `;
+
+    musicListDiv.appendChild(musicRow);
+  });
 });
 </script>
 </body>

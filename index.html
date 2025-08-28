@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -10,7 +10,8 @@
       font-family:sans-serif;
       background:#111;
       color:#fff;
-      direction: ltr; 
+      direction:ltr;
+      text-align:left;
     }
     .container{
       max-width:600px;
@@ -24,6 +25,7 @@
       padding:15px;
       gap:15px;
       border-bottom:1px solid #333;
+      text-align:left;
     }
     .avatar{
       width:70px;
@@ -36,10 +38,7 @@
     .profile-info{flex:1;text-align:left}
     .profile-info .name{font-size:18px;font-weight:bold}
     .profile-info .lastseen{color:#aaa;font-size:14px}
-    .actions{
-      display:flex;
-      gap:10px;
-    }
+    .actions{display:flex;gap:10px}
     .actions button{
       background:#333;
       border:none;
@@ -51,7 +50,8 @@
     .info{padding:15px;border-bottom:1px solid #333;text-align:left}
     .info-item{margin-bottom:10px}
     .label{color:#aaa;font-size:13px}
-    .value{font-weight:bold;direction:rtl;text-align:right} 
+    .value{font-weight:bold}
+    .fa-text{direction:rtl;text-align:right}
     .tabs{display:flex;border-bottom:1px solid #333}
     .tab{
       flex:1;
@@ -73,7 +73,7 @@
       padding:5px;
       text-align:left;
     }
-    .thumb img, .thumb video{
+    .thumb img,.thumb video{
       width:100%;height:100px;object-fit:cover;border-radius:6px
     }
     .thumb .name{font-size:12px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -92,11 +92,8 @@
       border-radius:10px;
       text-align:left;
     }
-    .music-row .title{
-      margin-bottom:8px;
-      font-weight:bold;
-      direction:rtl; 
-    }
+    .music-row .title{margin-bottom:8px;font-weight:bold}
+    .music-row .title.fa-text{direction:rtl;text-align:right}
     .music-row audio{
       width:100%;
       border-radius:8px;
@@ -131,7 +128,7 @@
       </div>
       <div class="info-item">
         <div class="label">Bio</div>
-        <div class="value"></div>
+        <div class="value fa-text">بیو فارسی نمونه</div>
       </div>
       <div class="info-item">
         <div class="label">Username</div>
@@ -152,84 +149,74 @@
         <div class="grid"></div>
       </div>
       <div id="music" class="pane" style="display:none">
-          <div id="music-list"></div>
+        <div id="music-list"></div>
       </div>
       <div id="links" class="pane" style="display:none">
         <a href="https://m.soundcloud.com/user-165893208/">SoundCloud</a>
       </div>
     </div>
   </div>
-
 <script>
 document.querySelectorAll('.tab').forEach(tab=>{
   tab.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelectorAll('.pane').forEach(p=>p.style.display='none');
-    document.getElementById(tab.dataset.target).style.display='block';
-  });
-});
-
-const mediaFiles = [
-  {name:"File1.mkv", size:"81.7 MB", path:"media/File1.mkv"},
-  {name:"ReZero15.mkv", size:"123 MB", path:"media/ReZero15.mkv"},
-  {name:"ReZero14.mkv", size:"135 MB", path:"media/ReZero14.mkv"},
-  {name:"Image1.jpg", size:"1.2 MB", path:"media/Image1.jpg"},
-  {name:"Image2.png", size:"980 KB", path:"media/Image2.png"}
-];
-
-const mediaGrid = document.querySelector('#media .grid');
-mediaGrid.innerHTML = '';
-
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
+    tab.classList.add('active')
+    document.querySelectorAll('.pane').forEach(p=>p.style.display='none')
+    document.getElementById(tab.dataset.target).style.display='block'
+  })
+})
+const mediaFiles=[
+  {name:"File1.mkv",size:"81.7 MB",path:"media/File1.mkv"},
+  {name:"ReZero15.mkv",size:"123 MB",path:"media/ReZero15.mkv"},
+  {name:"ReZero14.mkv",size:"135 MB",path:"media/ReZero14.mkv"},
+  {name:"Image1.jpg",size:"1.2 MB",path:"media/Image1.jpg"},
+  {name:"Image2.png",size:"980 KB",path:"media/Image2.png"}
+]
+const mediaGrid=document.querySelector('#media .grid')
+mediaGrid.innerHTML=''
 mediaFiles.forEach(f=>{
-  const thumb = document.createElement('div');
-  thumb.className = 'thumb';
-
+  const thumb=document.createElement('div')
+  thumb.className='thumb'
   if(f.path.match(/\.(jpg|png|jpeg|gif)$/i)){
-    thumb.innerHTML = `
+    thumb.innerHTML=`
       <img src="${f.path}" alt="">
       <div class="name">${f.name}</div>
       <div class="meta">${f.size}</div>
       <a href="${f.path}" download>⬇ دانلود</a>
-    `;
-  } else if(f.path.match(/\.(mkv|mp4)$/i)){
-    thumb.innerHTML = `
+    `
+  }else if(f.path.match(/\.(mkv|mp4)$/i)){
+    thumb.innerHTML=`
       <video src="${f.path}" controls></video>
       <div class="name">${f.name}</div>
       <div class="meta">${f.size}</div>
       <a href="${f.path}" download>⬇ دانلود</a>
-    `;
+    `
   }
-
-  mediaGrid.appendChild(thumb);
-});
-
-const musicFiles = [
-  {name: "نمیفهمه کسی", file: "media/Nemifahme.mp3"},
-  {name: "یه شب", file: "media/YeShab.mp3"},
-  {name: "نه از ده", file: "media/910.mp3"},
-  {name: "زمستون", file: "media/Zemestoon.mp3"},
-  {name: "پشیمونم", file: "media/Pashimoonam.mp3"},
-  {name: "تولد", file: "media/Tavalod.mp3"},
-  {name: "خدایا", file: "media/Khodaya.mp3"},
-];
-
-const musicListDiv = document.getElementById("music-list");
-musicFiles.forEach(music => {
-  const musicRow = document.createElement("div");
-  musicRow.className = "music-row";
-
-  musicRow.innerHTML = `
-    <div class="title">${music.name}</div>
+  mediaGrid.appendChild(thumb)
+})
+const musicFiles=[
+  {name:"نمیفهمه کسی",file:"media/Nemifahme.mp3"},
+  {name:"یه شب",file:"media/YeShab.mp3"},
+  {name:"نه از ده",file:"media/910.mp3"},
+  {name:"زمستون",file:"media/Zemestoon.mp3"},
+  {name:"پشیمونم",file:"media/Pashimoonam.mp3"},
+  {name:"تولد",file:"media/Tavalod.mp3"},
+  {name:"خدایا",file:"media/Khodaya.mp3"}
+]
+const musicListDiv=document.getElementById("music-list")
+musicFiles.forEach(music=>{
+  const musicRow=document.createElement("div")
+  musicRow.className="music-row"
+  musicRow.innerHTML=`
+    <div class="title fa-text">${music.name}</div>
     <audio controls>
       <source src="${music.file}" type="audio/mpeg">
       مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
     </audio>
     <a href="${music.file}" download>⬇ دانلود</a>
-  `;
-
-  musicListDiv.appendChild(musicRow);
-});
+  `
+  musicListDiv.appendChild(musicRow)
+})
 </script>
 </body>
 </html>

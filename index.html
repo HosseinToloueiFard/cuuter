@@ -106,6 +106,51 @@
       text-decoration:none;
       font-size:14px;
     }
+    /* modal */
+    .modal{
+      display:none;
+      position:fixed;
+      top:0;left:0;
+      width:100%;height:100%;
+      background:rgba(0,0,0,0.7);
+      justify-content:center;
+      align-items:center;
+      z-index:1000;
+    }
+    .modal-content{
+      background:#1e1e1e;
+      padding:20px;
+      border-radius:10px;
+      width:90%;
+      max-width:400px;
+      position:relative;
+    }
+    .modal-close{
+      position:absolute;
+      top:10px;
+      right:10px;
+      cursor:pointer;
+      font-size:20px;
+      color:#fff;
+    }
+    .modal-tabs{
+      display:flex;
+      border-bottom:1px solid #333;
+      margin-bottom:10px;
+    }
+    .modal-tab{
+      flex:1;
+      text-align:center;
+      padding:8px;
+      cursor:pointer;
+      color:#aaa;
+    }
+    .modal-tab.active{
+      color:#4da3ff;
+      border-bottom:2px solid #4da3ff;
+    }
+    .modal-pane{display:none;padding-top:10px}
+    .modal-pane.active{display:block}
   </style>
 </head>
 <body>
@@ -118,7 +163,7 @@
       </div>
       <div class="actions">
         <button>📹</button>
-        <button>📞</button>
+        <button id="openModal">📞</button>
       </div>
     </div>
     <div class="info">
@@ -156,6 +201,21 @@
       </div>
     </div>
   </div>
+
+  <div class="modal" id="myModal">
+    <div class="modal-content">
+      <div class="modal-close" id="closeModal">✖</div>
+      <div class="modal-tabs">
+        <div class="modal-tab active" data-target="yas">یاسین</div>
+        <div class="modal-tab" data-target="fat">فاتحه</div>
+        <div class="modal-tab" data-target="ashoora">زیارت عاشورا</div>
+      </div>
+      <div id="yas" class="modal-pane active">test</div>
+      <div id="fat" class="modal-pane">test</div>
+      <div id="ashoora" class="modal-pane">test</div>
+    </div>
+  </div>
+
 <script>
 document.querySelectorAll('.tab').forEach(tab=>{
   tab.addEventListener('click',()=>{
@@ -216,6 +276,19 @@ musicFiles.forEach(music=>{
     <a href="${music.file}" download>⬇ دانلود</a>
   `
   musicListDiv.appendChild(musicRow)
+})
+
+const modal=document.getElementById("myModal")
+document.getElementById("openModal").onclick=()=>{modal.style.display="flex"}
+document.getElementById("closeModal").onclick=()=>{modal.style.display="none"}
+window.onclick=(e)=>{if(e.target==modal)modal.style.display="none"}
+document.querySelectorAll('.modal-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'))
+    document.querySelectorAll('.modal-pane').forEach(p=>p.classList.remove('active'))
+    tab.classList.add('active')
+    document.getElementById(tab.dataset.target).classList.add('active')
+  })
 })
 </script>
 </body>

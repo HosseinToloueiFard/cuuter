@@ -197,7 +197,7 @@
         <div class="grid"></div>
       </div>
       <div id="mediaf" class="pane">
-        <div class="grid"></div>
+        <div class="gridf"></div>
       </div>
       <div id="music" class="pane" style="display:none">
         <div id="music-list"></div>
@@ -1041,27 +1041,27 @@ const mediaFiles = [
   {name:"247.jpg",size:"",path:"media/247.jpg"},
   {name:"248.jpg",size:"",path:"media/248.jpg"}
 ];
-const mediafGrid=document.querySelector('#mediaf .grid')
+const mediafGrid=document.querySelector('#mediaf .gridf')
 mediafGrid.innerHTML=''
 mediafFiles.forEach(f=>{
-  const thumb=document.createElement('div')
-  thumb.className='thumb'
+  const thumbf=document.createElement('div')
+  thumbf.className='thumb'
   if(f.path.match(/\.(jpg|png|jpeg|gif)$/i)){
-    thumb.innerHTML=`
+    thumbf.innerHTML=`
       <img src="${f.path}" alt="">
       <div class="name">${f.name}</div>
       <div class="meta">${f.size}</div>
       <a href="${f.path}" download>⬇ دانلود</a>
     `
   }else if(f.path.match(/\.(mkv|mp4)$/i)){
-    thumb.innerHTML=`
+    thumbf.innerHTML=`
       <video src="${f.path}" controls></video>
       <div class="name">${f.name}</div>
       <div class="meta">${f.size}</div>
       <a href="${f.path}" download>⬇ دانلود</a>
     `
   }
-  mediafGrid.appendChild(thumb)
+  mediafGrid.appendChild(thumbf)
 })
 const musicFiles=[
   {name:"نمیفهمه کسی",file:"media/Nemifahme.mp3"},
